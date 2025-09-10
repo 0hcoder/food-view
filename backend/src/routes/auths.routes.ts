@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { login, logout, register } from "../controllers/auth.controller";
+import { foodPartnerLogin, foodPartnerLogout, foodPartnerRegister, login, logout, register } from "../controllers/auth.controller";
 
 // Create a typed router
 const router: Router = Router();
@@ -24,5 +24,11 @@ router.post("/login", login);
  * @access  Public/Private (depends on implementation)
  */
 router.get("/logout", logout);
+
+router.post("/food-partner-register",foodPartnerRegister)
+router.post("/food-partner-login", foodPartnerLogin);
+router.get("/food-partner-logout", foodPartnerLogout);
+
+
 
 export default router;

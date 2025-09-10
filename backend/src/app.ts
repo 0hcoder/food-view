@@ -1,6 +1,9 @@
 import express, { Application, Request, Response, NextFunction } from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
+import foodRoute from "./routes/food.route"
+
+
 
 // Create Express app with proper typing
 const app: Application = express();
@@ -21,7 +24,9 @@ app.use(cookieParser());
 
 // Routes
 import authRoutes from "./routes/auths.routes";
+
 app.use("/api/auth", authRoutes);
+app.use("/api/food",foodRoute);
 
 // Health check route (optional but useful)
 app.get("/api/health", (req: Request, res: Response) => {
