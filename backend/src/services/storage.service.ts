@@ -8,11 +8,8 @@ const imagekit = new ImageKit({
 });
 
 export const upload = (file:any,fileName:any)=>{
-    imagekit.upload({
-        file : file, //required
-        fileName : fileName,   //required    
-        },function(error:any, result:any) {
-            if(error) console.log(error);
-            else console.log(result);
-    });  
+ return  imagekit.upload({
+    file:file,
+    fileName:fileName
+   })
 }

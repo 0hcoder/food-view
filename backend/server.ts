@@ -1,9 +1,10 @@
 import dotenv from "dotenv";
+dotenv.config();
 import app from "./src/app";
 import connectToDB from "./src/db/db";
 
 // Load environment variables from .env file
-dotenv.config();
+
 
 // Explicitly type the PORT as a number with fallback
 const PORT: number = parseInt(process.env.PORT || "5000", 10);

@@ -16,35 +16,44 @@ export const createFoodItem = async (
       return;
     }
 
-    const { _id } = (req as any).user; 
-    const fileUpload = await upload({
-      file: video.buffer,
-      fileName: `${uuid.v4()}-${video.originalname}`,
-    });
+    const { _id } = (req as any).user;
+    const fileUpload = await upload(video.buffer, uuid.v4());
+    console.log(fileUpload);
+    if (!fileUpload) {
+      res.status(500).json({ message: "Video upload failed" });
+      return;
+    }
+
     const foodPartner = await FoodPartnerModel.findById(_id);
     if (!foodPartner) {
       res.status(404).json({ message: "Food Partner not found" });
       return;
     }
-    let videoUrl = "demo";
     const newFoodItem = new FoodModel({
       name,
       description,
       price,
       foodPartner: _id,
       category,
-      videoUrl,
+      videoUrl: fileUpload.url,
     });
     await newFoodItem.save();
-    res
-      .status(201)
-      .json({
-        message: "Food item created successfully",
-        foodItem: newFoodItem,
-      });
+    res.status(201).json({
+      message: "Food item created successfully",
+      foodItem: newFoodItem,
+    });
   } catch (error: any) {
     res.status(500).json({ message: error.message || "Server error" });
   }
 };
+export const getFoodItem = async (req: Request, res: Response): Promise<void> => {
+  try {
+
+    const foodItems = await FoodModel.find({});
+    res.status(200).json({message:"Food item fetched", foodItems });
+  } catch (error: any) {  
+    res.status(500).json({ message: error.message || "Server error" });
+  }
+}
 
 // Get all food items for a specific food partner
